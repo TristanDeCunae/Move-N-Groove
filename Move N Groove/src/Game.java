@@ -1,106 +1,30 @@
-import javax.swing.*;
+package main;
+
 import java.awt.*;
-import java.awt.image.BufferedImage; 
-import java.awt.event.*; 
+import java.util.ArrayList;
 
+public class Game implements Runnable {
 
-public class Game  extends JPanel implements Runnable, KeyListener{
+    private GamePanel gamePanel;
+    private Thread gameThread;
+    private int width;
+    private int height;
 
-	
-	private BufferedImage back; 
-	private int key; 
+    private ArrayList<Slime> slimes;
+    private Slime selectedSlime;
+    public float slimeSpawnRate = Constants.FPS;
+    private float slimeSpawnTime = 0;
 
+    public int score = 0;
+    public boolean startGame;
+    public boolean gameOver;
+    public boolean isZapGateEnabled = true;
 
+    public Game(){
+        width = Constants.WIDTH;
+        height = Constants.HEIGHT;
+        restart();
 
-	
-	public Game() {
-		new Thread(this).start();	
-		this.addKeyListener(this);
-		key =-1; 
-		
-	
-	}
+        Constants.playSound("./res/sounds/bgmusic.wav", -20, true);
+    }
 
-	
-	
-	public void run()
-	   {
-	   	try
-	   	{
-	   		while(true)
-	   		{
-	   		   Thread.currentThread().sleep(5);
-	            repaint();
-	         }
-	      }
-	   		catch(Exception e)
-	      {
-	      }
-	  	}
-	
-
-	
-	
-	
-	public void paint(Graphics g){
-		
-		Graphics2D twoDgraph = (Graphics2D) g; 
-		if( back ==null)
-			back=(BufferedImage)( (createImage(getWidth(), getHeight()))); 
-		
-
-		Graphics g2d = back.createGraphics();
-	
-		g2d.clearRect(0,0,getSize().width, getSize().height);
-		
-		g2d.setFont( new Font("Broadway", Font.BOLD, 50));
-		
-		g2d.drawString("key " + key, 340, 100);
-		
-	
-		twoDgraph.drawImage(back, null, 0, 0);
-
-	}
-
-	
-
-
-
-	//DO NOT DELETE
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-
-//DO NOT DELETE
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-		key= e.getKeyCode();
-		System.out.println(key);
-		
-		
-		
-	
-	}
-
-
-	//DO NOT DELETE
-	@Override
-	public void keyReleased(KeyEvent e) {
-		
-		
-		
-		
-	}
-	
-	
-	
-
-	
-}
